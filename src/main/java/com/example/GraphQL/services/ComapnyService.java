@@ -9,7 +9,7 @@ public interface ComapnyService {
     Company create(Company company);
     List<Company> getAll();
 
-    List<Employee> findCompanyId(Long id);
+    Company findCompanyId(Long id);
     Company update(long id, Company company);
 
     Boolean delete(long id);

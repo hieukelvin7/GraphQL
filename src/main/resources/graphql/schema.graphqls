@@ -13,7 +13,7 @@ type Query{
     getEmployee(id:ID):Employee
 
     allCompany:[Company]
-    getCompany(id:ID!):[Employee]
+    getCompany(id:ID!):Company
 }
 
 type Employee{

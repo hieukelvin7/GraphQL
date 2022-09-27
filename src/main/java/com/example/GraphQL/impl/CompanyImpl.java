@@ -29,7 +29,7 @@ public class CompanyImpl implements ComapnyService {
     }
 
     @Override
-    public List<Employee> findCompanyId(Long id) {
+    public Company findCompanyId(Long id) {
         return companyRepository.findCompanyId(id);
     }
 

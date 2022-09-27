@@ -3,16 +3,12 @@ package com.example.GraphQL.controller;
 import com.example.GraphQL.entities.Company;
 import com.example.GraphQL.entities.Employee;
 import com.example.GraphQL.request.CompanyInput;
-import com.example.GraphQL.request.EmployeeInput;
 import com.example.GraphQL.services.ComapnyService;
-import lombok.Getter;
-import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -51,7 +47,7 @@ public class CompanyController  {
     }
 
     @QueryMapping("getCompany")
-    public List<Employee> get (@Argument Long id){
+    public Company get (@Argument Long id){
         return comapnyService.findCompanyId(id);
     }
 
