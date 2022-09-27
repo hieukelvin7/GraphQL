@@ -1,10 +1,11 @@
 package com.example.GraphQL.controller;
 
+import com.example.GraphQL.entities.Company;
 import com.example.GraphQL.entities.Employee;
+import com.example.GraphQL.repository.CompanyRepository;
 import com.example.GraphQL.repository.EmployeeRepository;
+import com.example.GraphQL.request.EmployeeInput;
 import com.example.GraphQL.services.EmployeeService;
-import lombok.Getter;
-import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
@@ -18,32 +19,37 @@ import java.util.List;
 public class EmployeeController {
 
     private final EmployeeService employeeService;
-    private EmployeeRepository employeeRepository;
+    private final CompanyRepository companyRepository;
 
     @Autowired
-    public EmployeeController(EmployeeService employeeService, EmployeeRepository employeeRepository) {
+    public EmployeeController(EmployeeService employeeService, CompanyRepository companyRepository) {
         this.employeeService = employeeService;
-        this.employeeRepository = employeeRepository;
+        this.companyRepository = companyRepository;
     }
 
 
     @MutationMapping("createEmployee")
     public Employee create (@Argument EmployeeInput employee){
+        Company company = companyRepository.findById(employee.getCompanyId()).get();
+
         Employee emp = new Employee();
         emp.setName(employee.getName());
         emp.setEmail(employee.getEmail());
         emp.setAddress(employee.getAddress());
         emp.setAge(employee.getAge());
+        emp.setCompany(company);
         return employeeService.create(emp);
     }
     @MutationMapping("updateEmployee")
     public Employee update (@Argument Long id ,@Argument EmployeeInput employee){
+        Company company = companyRepository.findById(employee.getCompanyId()).get();
         Employee emp = new Employee();
         emp.setId(id);
         emp.setName(employee.getName());
         emp.setEmail(employee.getEmail());
         emp.setAddress(employee.getAddress());
         emp.setAge(employee.getAge());
+        emp.setCompany(company);
         return employeeService.update(id,emp);
     }
 
@@ -63,11 +69,4 @@ public class EmployeeController {
     }
 }
 
-@Getter
-@Setter
-class EmployeeInput{
-    private String name;
-    private String email;
-    private String address;
-    private Integer age;
-}
+

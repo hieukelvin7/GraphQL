@@ -2,11 +2,18 @@ type Mutation{
     createEmployee(employee:EmployeeInput):Employee
     updateEmployee(id: Int,employee:EmployeeInput): Employee!
     deleteEmployee(id: ID!): Boolean
+
+    createCompany(company:CompanyInput!):Company!
+    updateCompany(id: Int,company:CompanyInput): Company!
+    deleteCompany(id: ID!): Boolean
 }
 
 type Query{
     allEmployees:[Employee]
     getEmployee(id:ID):Employee
+
+    allCompany:[Company]
+    getCompany(id:ID!):[Employee]
 }
 
 type Employee{
@@ -15,6 +22,12 @@ type Employee{
     email:String
     address:String
     age:Int
+    company:Company
+}
+type Company{
+    id:ID!
+    name:String
+    employee:[Employee]
 }
 
 input EmployeeInput{
@@ -23,4 +36,8 @@ input EmployeeInput{
     email:String
     address:String
     age:Int
+    companyId:Int!
+}
+input CompanyInput{
+    name:String!
 }
