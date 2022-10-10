@@ -3,10 +3,10 @@ package com.example.GraphQL.controller;
 import com.example.GraphQL.entities.Company;
 import com.example.GraphQL.entities.Employee;
 import com.example.GraphQL.repository.CompanyRepository;
-import com.example.GraphQL.repository.EmployeeRepository;
 import com.example.GraphQL.request.EmployeeInput;
 import com.example.GraphQL.services.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
@@ -53,10 +53,16 @@ public class EmployeeController {
         return employeeService.update(id,emp);
     }
 
-    @QueryMapping("allEmployees")
-    public List<Employee> getAll(){
-        return employeeService.getAll();
+//    @QueryMapping("allEmployees")
+//    public List<Employee> getAll(){
+//        return employeeService.getAll();
+//    }
+    @QueryMapping("allEmployeePaged")
+    public Page<Employee> allEmployeePaged(@Argument String name,@Argument int page,@Argument int size, @Argument String sort){
+        return employeeService.getAll(name,page,size, sort);
     }
+
+
 
     @QueryMapping("getEmployee")
     public Employee get(@Argument int id){

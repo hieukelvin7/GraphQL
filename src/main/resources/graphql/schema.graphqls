@@ -11,10 +11,30 @@ type Mutation{
 type Query{
     allEmployees:[Employee]
     getEmployee(id:ID):Employee
+    allEmployeePaged(name:String,page:Int,size:Int,sort:String):[Employee]
+
 
     allCompany:[Company]
     getCompany(id:ID!):Company
 }
+
+input NameOrderByInput {
+    name:SortOrder
+    age:SortOrder
+    address:SortOrder
+}
+
+enum SortOrder {
+    ASC
+    DESC
+}
+
+input EmployeeFilter {
+    name:String
+    address:String
+    age:String
+}
+
 
 type Employee{
     id:ID!

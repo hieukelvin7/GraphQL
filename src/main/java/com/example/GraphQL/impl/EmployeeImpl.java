@@ -2,9 +2,12 @@ package com.example.GraphQL.impl;
 
 import com.example.GraphQL.entities.Employee;
 import com.example.GraphQL.repository.EmployeeRepository;
+import com.example.GraphQL.request.EmployeeFilter;
 import com.example.GraphQL.services.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,10 +26,36 @@ public class EmployeeImpl implements EmployeeService {
         return employeeRepository.save(employee);
     }
 
-    @Override
-    public List<Employee> getAll() {
-        return employeeRepository.findAll();
-    }
+//    @Override
+//    public Page<Employee> getAll(int page, int size, String sort) {
+//        String[] arr = null;
+//        arr = sort.split(",");
+//        String first = arr[0];
+//        Sort sortable = null;
+//        if (arr[1].equals("ASC")) {
+//            sortable = Sort.by(first).ascending();
+//        }
+//        if (arr[1].equals("DESC")) {
+//            sortable = Sort.by(first).descending();
+//        }
+//        PageRequest pr = PageRequest.of(page, size,sortable);
+//        return employeeRepository.findAll(pr);
+//    }
+@Override
+public Page<Employee> getAll(String name,int page, int size, String sort) {
+
+    Sort sortable = null;
+    if (sort.equals("ASC")) {
+        sortable = Sort.by("id").ascending();
+        }
+        if (sort.equals("DESC")) {
+            sortable = Sort.by("id").descending();
+        }
+    return employeeRepository.findByName(name, PageRequest.of(page, size, sortable));
+
+}
+
+
 
     @Override
     public Employee get(long id) {

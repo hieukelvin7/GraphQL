@@ -9,12 +9,16 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.util.List;
+import java.util.stream.IntStream;
+
 @SpringBootApplication
 public class GraphQlApplication implements CommandLineRunner {
 
 
 	private final EmployeeService employeeService;
 	private ComapnyService comapnyService;
+
 	@Autowired
 	public GraphQlApplication(EmployeeService employeeService, ComapnyService comapnyService) {
 		this.employeeService = employeeService;
